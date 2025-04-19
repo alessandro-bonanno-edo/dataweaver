@@ -5,7 +5,11 @@
 	"type": "module",
 	"scripts": {
 		"dev": "vite dev",
-		"build": "vite build",
+		"build": "npm-run-all clean build:svelte build:static-scripts",
+		"build:svelte": "vite build",
+		"build:static-scripts": "tsc -p tsconfig.static.json",
+		"clean": "rimraf ./build",
+		"prebuild": "npm run clean",
 		"preview": "vite preview",
 		"prepare": "svelte-kit sync || echo ''",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
