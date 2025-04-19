@@ -1,0 +1,17 @@
+{
+	"compilerOptions": {
+		"outDir": "./build",
+		"rootDir": "./static",
+		"noEmit": false,
+		"target": "ES2024",
+		"module": "ESNext",
+		"sourceMap": true,
+		"strict": true,
+		"esModuleInterop": true,
+		"skipLibCheck": true,
+		"forceConsistentCasingInFileNames": true,
+		"isolatedModules": true
+	},
+	"include": ["./static/*.ts"],
+	"exclude": ["node_modules"]
+}
