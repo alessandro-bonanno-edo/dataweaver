@@ -19,8 +19,8 @@ interface WindowWithDWProperties extends Window {
 	};
 }
 
-(function () {
-	console.log('[Main World] Setting up data tracking with Proxies');
+(() => {
+	// console.log('[Main World] Setting up data tracking with Proxies');
 	const win: WindowWithDWProperties = window;
 
 	function createReactiveProxy<T extends object>(target: T, name: string): T {
@@ -41,8 +41,8 @@ interface WindowWithDWProperties extends Window {
 				const tc_vars = cloneSafe(win.tc_vars || {});
 				const sessionScope = cloneSafe(win.Odigeo?.SessionScope || {});
 
-				console.info('[Main World] Array push operation detected:', clonedArray);
-				console.info('[Main World] Pushed data:', args, result);
+				// console.info('[Main World] Array push operation detected:', clonedArray);
+				// console.info('[Main World] Pushed data:', args, result);
 
 				const message: PostMessagePayload = {
 					source: 'DW_DATA',
@@ -54,23 +54,19 @@ interface WindowWithDWProperties extends Window {
 						sessionScope
 					}
 				};
-
 				window.postMessage(message, '*');
-
 				return result;
 			};
 		}
-
 		return proxy;
 	}
 
-	// Safely clone only serializable parts to avoid DataCloneError
 	function cloneSafe<T>(obj: T) {
 		try {
 			return JSON.parse(JSON.stringify(obj));
 		} catch (e) {
 			console.error('[Main World] Failed to clone object:', e);
-			return null; // or handle it differently
+			return null;
 		}
 	}
 
@@ -79,14 +75,13 @@ interface WindowWithDWProperties extends Window {
 		const proxiedTcVars = createReactiveProxy(win.tc_vars || {}, 'tc_vars');
 		const proxiedSessionScope = createReactiveProxy(win.Odigeo?.SessionScope || {}, 'sessionScope');
 
-		// Optional: re-assign them on window for convenience
 		win.dataLayer = proxiedDataLayer;
 		win.tc_vars = proxiedTcVars;
 		if (win.Odigeo?.SessionScope) {
 			win.Odigeo.SessionScope = proxiedSessionScope;
 		}
 
-		console.log('[Main World] Proxies set up successfully');
+		// console.log('[Main World] Proxies set up successfully');
 	} catch (err) {
 		console.error('[Main World] Failed to set proxies:', err);
 	}

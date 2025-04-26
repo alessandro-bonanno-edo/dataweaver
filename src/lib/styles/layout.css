@@ -1,0 +1,29 @@
+@layer layout {
+	#root {
+		display: flex;
+		flex-direction: column;
+		min-height: 100dvh;
+		max-width: 100dvw;
+	}
+
+	header,
+	footer {
+		align-self: center;
+	}
+
+	header {
+		display: flex;
+		gap: var(--spc-base);
+		align-items: center;
+	}
+
+	main {
+		flex: 1;
+		display: grid;
+		gap: var(--spc-base);
+		grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+		div {
+			overflow-x: clip;
+		}
+	}
+}

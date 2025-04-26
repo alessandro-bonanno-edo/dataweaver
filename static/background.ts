@@ -18,15 +18,12 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 			.then(() => sendResponse({ success: true }))
 			.catch((err) => sendResponse({ success: false, error: err.message }));
 
-		return true; // ✅ keeps the message channel open for async sendResponse
+		return true;
 	}
 	if (message.type === 'DW_DATA_ISOLATED') {
-		// Handle the data received from the isolated world
-		console.log('[Background] Received data from isolated world:', message.payload);
 		chrome.runtime.sendMessage({
 			type: 'DW_DATA_BACKGROUND',
 			payload: message.payload
 		});
 	}
-	// For other messages you can add handlers, and return true as needed
 });

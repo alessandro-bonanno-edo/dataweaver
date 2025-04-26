@@ -22,8 +22,6 @@
 	});
 </script>
 
-<h1>DataWeaver</h1>
-
 <div>
 	<h2>DataLayer</h2>
 	<pre>{JSON.stringify(dataLayer, null, 2)}</pre>
