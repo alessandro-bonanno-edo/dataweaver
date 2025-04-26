@@ -7,18 +7,12 @@
 	"devtools_page": "devtools.html",
 	"permissions": ["activeTab", "scripting", "storage"],
 	"host_permissions": ["<all_urls>"],
-	"web_accessible_resources": [
-		{
-			"resources": ["devtools.js", "injected.js"],
-			"matches": ["<all_urls>"]
-		}
-	],
 	"content_scripts": [
 		{
 			"matches": ["<all_urls>"],
-			"js": ["content.js"],
-			"run_at": "document_end",
-			"world": "MAIN"
+			"js": ["isolated.js"],
+			"run_at": "document_idle",
+			"world": "ISOLATED"
 		}
 	],
 	"background": {
