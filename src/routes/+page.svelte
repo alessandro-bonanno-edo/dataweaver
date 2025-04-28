@@ -3,7 +3,7 @@
 	let tc_vars = $state<Record<string, unknown>>({});
 	let sessionScope = $state<Record<string, unknown>>({});
 
-	function handleIncomingMessage(message: any) {
+	const handleIncomingMessage = (message: any) => {
 		if (message?.type === 'DW_DATA_BACKGROUND') {
 			console.log('[Svelte] Received data from extension:', message.payload);
 
@@ -11,7 +11,9 @@
 			tc_vars = message.payload.tc_vars || {};
 			sessionScope = message.payload.sessionScope || {};
 		}
-	}
+
+		console.log('[Svelte] Updated dataLayer:', dataLayer);
+	};
 
 	$effect(() => {
 		const listener = (message: any) => handleIncomingMessage(message);

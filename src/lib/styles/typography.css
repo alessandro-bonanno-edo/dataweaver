@@ -1,6 +1,6 @@
 @layer typography {
 	body {
-		font-family: 'Work Sans', sans-serif;
+		font-family: var(--fnt-base);
 		font-weight: normal;
 	}
 
@@ -10,19 +10,19 @@
 	h4,
 	h5,
 	h6 {
-		font-family: 'Manrope', sans-serif;
+		font-family: var(--fnt-alt);
 		font-weight: bold;
 	}
 
 	button {
-		font-family: 'Manrope', sans-serif;
+		font-family: var(--fnt-alt);
 		font-weight: normal;
 	}
 
 	input,
 	textarea,
 	select {
-		font-family: 'Work Sans', sans-serif;
+		font-family: var(--fnt-base);
 		font-weight: normal;
 	}
 }

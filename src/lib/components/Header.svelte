@@ -1,3 +1,7 @@
+<script>
+	import Logo from './Logo.svelte';
+</script>
+
 <header>
-	<h1>Data Weaver</h1>
+	<Logo />
 </header>
