@@ -4,21 +4,19 @@
 
 	gsap.registerPlugin(MotionPathPlugin);
 
-	const PARTICLE_COUNT = 30;
-	const STAR_COUNT = 100; // Maybe more stars for wider view?
+	const PARTICLE_COUNT = 100;
+	const STAR_COUNT = 500;
 
 	let particles: SVGElement[] = [];
 	let stars: SVGCircleElement[] = [];
 	let shadowTextEl: SVGTextElement | null = null; // Or initialize as undefined
 
-	// Path IDs remain the same
 	const weavePaths = ['#line1', '#line2', '#line3', '#line4'];
 
 	function random(min: number, max: number): number {
 		return Math.random() * (max - min) + min;
 	}
 
-	// $effect containing all animations (Path drawing, particle motion, stars, text)
 	$effect(() => {
 		console.log('Effect running...');
 		// --- Path Drawing Animation ---
@@ -105,38 +103,7 @@
 		} else {
 			console.warn('No star elements found to animate.');
 		}
-
-		// --- Text Fade-in ---
-		const textElement = document.querySelector('#logo-text');
-		if (textElement) {
-			gsap.fromTo(textElement, { opacity: 0 }, { opacity: 1, duration: 2, delay: 1.5 });
-		}
-
-		// --- Moving Rainbow Text Shadow Animation ---
-		const shadowTarget = shadowTextEl ?? document.querySelector('#logo-text-shadow');
-		if (shadowTarget) {
-			console.log('Animating rainbow text shadow...');
-			// Animate position
-			gsap.to(shadowTarget, {
-				x: '+=4', // Slightly increased offset X
-				y: '+=4', // Slightly increased offset Y
-				duration: 4, // Maybe slow it down a bit
-				repeat: -1,
-				yoyo: true,
-				ease: 'sine.inOut'
-			});
-
-			// Animate fill color through hues
-			gsap.to(shadowTarget, {
-				fill: 'hsl(+=360, 100%, 60%)', // Cycle hue (+=360), keep saturation high, adjust lightness (60%?)
-				duration: 10, // How long a full rainbow cycle takes
-				repeat: -1,
-				ease: 'none' // Linear transition through colors
-			});
-		} else {
-			console.warn('Shadow text element not found for animation.');
-		}
-	}); // End of $effect
+	});
 </script>
 
 <svg
@@ -146,7 +113,7 @@
 	xmlns="http://www.w3.org/2000/svg"
 >
 	<defs>
-		<radialGradient id="bgGradient" cx="50%" cy="50%" r="60%">
+		<radialGradient id="bgGradient" cx="50%" cy="50%" r="50%">
 			<stop offset="0%" stop-color="#0b0c2a" />
 			<stop offset="100%" stop-color="#050510" />
 		</radialGradient>
@@ -156,14 +123,14 @@
 			<stop offset="100%" stop-color="#5f00ff" stop-opacity="1" />
 		</linearGradient>
 		<filter id="glow">
-			<feGaussianBlur stdDeviation="2.5" result="coloredBlur" />
+			<feGaussianBlur stdDeviation="5" result="coloredBlur" />
 			<feMerge>
 				<feMergeNode in="coloredBlur" />
 				<feMergeNode in="SourceGraphic" />
 			</feMerge>
 		</filter>
 		<filter id="shadow-blur">
-			<feGaussianBlur stdDeviation="1.5" />
+			<feGaussianBlur stdDeviation="5" />
 		</filter>
 	</defs>
 
@@ -182,7 +149,7 @@
 		{/each}
 	</g>
 
-	<g id="logo-group" transform="translate(300, 300) scale(1.1)">
+	<g id="logo-group" transform="translate(600, 300) rotate(45) scale(0.5)">
 		<g id="weaving-paths" fill="none" stroke="url(#weaveGradient)" stroke-width="1.5">
 			<path id="line1" d="M0,0 C-100,-300 100,-300 0,0 C-100,300 100,300 0,0" />
 			<path id="line2" d="M0,0 C-300,-100 -300,100 0,0 C300,-100 300,100 0,0" stroke-width="1" />
@@ -200,16 +167,16 @@
 	<text
 		id="logo-text-shadow"
 		bind:this={shadowTextEl}
-		x="750"
+		x="600"
 		y="300"
 		dominant-baseline="middle"
 		text-anchor="middle"
 		fill="hsl(0, 100%, 60%)"
 		opacity="0.7"
 		font-size="64"
-		font-family="Arial, Helvetica, sans-serif"
+		font-family="Chakra Petch, sans-serif"
 		font-weight="bold"
-		letter-spacing="1"
+		letter-spacing="2"
 		filter="url(#shadow-blur)"
 	>
 		DataWeaver
@@ -217,16 +184,18 @@
 
 	<text
 		id="logo-text"
-		x="750"
+		x="600"
 		y="300"
 		dominant-baseline="middle"
 		text-anchor="middle"
 		fill="#f0f0f0"
 		font-size="64"
-		font-family="Arial, Helvetica, sans-serif"
+		font-family="Chakra Petch, sans-serif"
 		font-weight="bold"
 		letter-spacing="1"
 		filter="url(#glow)"
+		stroke="black"
+		stroke-width="2"
 	>
 		DataWeaver
 	</text>
@@ -235,9 +204,9 @@
 <style>
 	svg {
 		display: block;
-		width: 100%; /* Already set, but good to confirm */
-		height: 125px; /* Set the desired fixed height */
-		background-color: #050510; /* Or your background */
-		overflow: hidden; /* Hide parts cropped by 'slice' if needed */
+		width: 100%;
+		height: 100px;
+		background-color: #050510;
+		overflow: hidden;
 	}
 </style>
